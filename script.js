@@ -22,7 +22,7 @@ const endScore = document.getElementById('end-score');
 const endTotalScore = document.getElementById('end-total-score');
 const message = document.getElementById('message');
 
-const quizQuestions = [
+const set = [
   {
     question: "What is the capital of France?",
     answers: [
@@ -159,6 +159,15 @@ const quizQuestions = [
     ],
   },
 ];
+var quizQuestions = [];
+function createQuestion(){
+  quizQuestions = [];
+  for(var i = 0; i<5; i++){
+    var ind = Math.floor(Math.random()*15);
+    quizQuestions.push(set[ind]);
+}}
+
+
 let count = 5;
 let current_question_idx = 0;
 let answersDisabled = false;
@@ -167,8 +176,9 @@ var score = 0;
 startBtn.addEventListener("click",startQuiz);
 
 function startQuiz(){
-    startScreen.classList.remove("active");
-    quizScreen.classList.add("active");
+  createQuestion();
+  startScreen.classList.remove("active");
+  quizScreen.classList.add("active");
     showQuestion();
 
 }
@@ -179,7 +189,7 @@ function showQuestion(){
     totalQuestion.innerText = count;
     currentScore.innerText = score;
     answerChoices.innerText = "";
-    currentProgress.style.width = ((current_question_idx+1)/5)*100 + "%";
+    currentProgress.style.width = ((current_question_idx)/5)*100 + "%";
     //show Button
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
